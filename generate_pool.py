@@ -10,7 +10,10 @@ if len(sys.argv) < 4:
 	print("eg ./generate_pool.py /samples input.wav 120 4")
 	exit()
 
+subDir = "pool"
 workingDir = sys.argv[1]
+existingFileCount = len(os.listdir(os.path.join(workingDir, subDir)))
+
 srcFn = os.path.join(workingDir, sys.argv[2])
 if not os.path.isfile(srcFn):
 	print("source file '%s' not found" % srcFn)
@@ -18,12 +21,13 @@ if not os.path.isfile(srcFn):
 
 secsPerBeat = 60.0 / int(sys.argv[3])
 beats = int(sys.argv[4])
+beatsOverlap = 0.05
 
 data, sampleRate = sf.read(srcFn)
-sampleLength = int(floor(sampleRate * beats * secsPerBeat))
+sampleLength = int(floor(sampleRate * (beats + beatsOverlap) * secsPerBeat))
 
 for i in range(1):
-	fnOut = os.path.join(workingDir, "pool\\loop_%.3d.wav" % i)
+	fnOut = os.path.join(workingDir, "pool\\%s_%.3d.wav" % (subDir, i + existingFileCount))
 	print("generating %s" % fnOut)
 	with sf.SoundFile(fnOut, mode="x", samplerate=sampleRate, channels=1, subtype="PCM_24") as outFile:
 		outFile.write(data[:sampleLength])
