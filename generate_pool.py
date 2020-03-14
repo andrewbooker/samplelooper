@@ -15,7 +15,7 @@ def findStartIdx(inDir):
 	return 1 + int(regex.findall(highestFn)[0])
 	
 
-if len(sys.argv) < 4:
+if len(sys.argv) < 5:
 	print("./generate_pool.py <dir> <source file> <tempo> <beats per sample>")
 	print("eg ./generate_pool.py /samples input.wav 120 4")
 	exit()
