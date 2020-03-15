@@ -33,7 +33,7 @@ sampleLength = int(floor(sampleRate * (beatsPerBar + beatsOverlap) * secsPerBeat
 
 for i in range(required):
 	startTime = i * beatsPerBar * secsPerBeat
-	fnOut = os.path.join(workingDir, "%s\\%s_%08.4f.wav" % (subDir, inFileName.split(".")[0], startTime))
+	fnOut = os.path.join(workingDir, "%s\\%s_%08.4f_%05.2f.wav" % (subDir, inFileName.split(".")[0], startTime, beatsPerBar * secsPerBeat))
 	startSample = int(floor(sampleRate * startTime))
 	print("generating %s" % fnOut)
 	with sf.SoundFile(fnOut, mode="x", samplerate=sampleRate, channels=1, subtype="PCM_24") as outFile:

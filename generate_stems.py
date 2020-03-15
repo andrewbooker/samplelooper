@@ -21,8 +21,8 @@ def vol(p, sampleLength, iterations):
 	
 	
 if len(sys.argv) < 4:
-	print("./assemble_loops.py <working dir with pool subdir> <tempo> <iterations>")
-	print("eg ./assemble_loops.py /samples 120 10")
+	print("./generate_stems.py <working dir with pool subdir> <tempo> <iterations>")
+	print("eg ./generate_stems.py /samples 120 10")
 	exit()
 
 
@@ -33,6 +33,7 @@ iterations = int(sys.argv[3])
 
 
 inDir = os.path.join(workingDir, "pool")
+outDir = os.path.join(workingDir, "stems")
 availableSamples = os.listdir(inDir)
 
 
@@ -40,7 +41,7 @@ availableSamples = os.listdir(inDir)
 for f in availableSamples:
 	pos = Pos()
 	now = time.time()
-	outFn = os.path.join(workingDir, "%s.wav" % datetime.datetime.fromtimestamp(now).strftime("%Y-%m-%d_%H%M%S"))
+	outFn = os.path.join(outDir, "%s_%d.wav" % (f.split(".wav")[0], iterations))
 	inFile = os.path.join(inDir, f)
 	print("found %s" % inFile)
 	data, sampleRate = sf.read(inFile)
