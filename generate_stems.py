@@ -3,8 +3,6 @@
 import soundfile as sf
 import sys
 import os
-import datetime
-import time
 from math import floor
 
 class Pos():
@@ -51,7 +49,7 @@ for f in availableSamples:
 	print("writing %s" % outFn)
 	sampleLength = len(data) - overlap
 	
-	with sf.SoundFile(outFn, mode="x", samplerate=sampleRate, channels=1, subtype="PCM_16") as outFile:
+	with sf.SoundFile(outFn, mode="x", samplerate=sampleRate, channels=1, subtype="PCM_24") as outFile:
 		for i in range(iterations):
 			if i == 0:
 				outFile.write(data[:sampleLength])
