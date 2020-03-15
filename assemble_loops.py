@@ -35,11 +35,12 @@ iterations = int(sys.argv[3])
 inDir = os.path.join(workingDir, "pool")
 availableSamples = os.listdir(inDir)
 
-now = time.time()
-outFn = os.path.join(workingDir, "%s.wav" % datetime.datetime.fromtimestamp(now).strftime("%Y-%m-%d_%H%M%S"))
 
-pos = Pos()
+
 for f in availableSamples:
+	pos = Pos()
+	now = time.time()
+	outFn = os.path.join(workingDir, "%s.wav" % datetime.datetime.fromtimestamp(now).strftime("%Y-%m-%d_%H%M%S"))
 	inFile = os.path.join(inDir, f)
 	print("found %s" % inFile)
 	data, sampleRate = sf.read(inFile)
