@@ -7,7 +7,7 @@ import csv
 
 workingDir = sys.argv[1]
 stemsDir = os.path.join(workingDir, "stems")
-arrangement = os.path.join(workingDir, sys.argv[2])
+arrangement = sys.argv[2]
 outFn = os.path.join(workingDir, "audio.wav")
 
 
@@ -55,7 +55,7 @@ events.sort()
 base = 0.0
 blockLengths = []
 for t in events:
-	if t > 0.0:
+	if (t > 0.0) and (t - base > 0.0):
 		blockLengths.append(t - base)
 		base = t
 		
