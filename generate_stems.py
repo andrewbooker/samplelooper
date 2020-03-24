@@ -38,7 +38,6 @@ availableSamples = os.listdir(inDir)
 
 for f in availableSamples:
 	pos = Pos()
-	now = time.time()
 	outFn = os.path.join(outDir, "%s_%d.wav" % (f.split(".wav")[0], iterations))
 	inFile = os.path.join(inDir, f)
 	print("found %s" % inFile)
