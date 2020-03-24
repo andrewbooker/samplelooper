@@ -10,8 +10,8 @@ regex = re.compile(r'\d+')
 
 
 if len(sys.argv) < 6:
-	print("./generate_pool.py <dir> <source file> <tempo> <beats per sample> <samples>")
-	print("eg ./generate_pool.py /samples input.wav 120 4 6")
+	print("./generate_pool.py <dir> <source file> <tempo> <beats per sample> <start bar> <samples>")
+	print("eg ./generate_pool.py /samples input.wav 120 4 23 6")
 	exit()
 
 subDir = "pool"
@@ -25,14 +25,16 @@ if not os.path.isfile(srcFn):
 
 secsPerBeat = 60.0 / int(sys.argv[3])
 beatsPerBar = int(sys.argv[4])
+startBar = int(sys.argv[5])
+required = int(sys.argv[6])
 beatsOverlap = 0.05
-required = int(sys.argv[5])
+
 
 data, sampleRate = sf.read(srcFn)
 sampleLength = int(floor(sampleRate * (beatsPerBar + beatsOverlap) * secsPerBeat))
 
 for i in range(required):
-	startTime = i * beatsPerBar * secsPerBeat
+	startTime = (startBar + i) * beatsPerBar * secsPerBeat
 	fnOut = os.path.join(workingDir, "%s\\%s_%08.4f_%05.2f.wav" % (subDir, inFileName.split(".")[0], startTime, beatsPerBar * secsPerBeat))
 	startSample = int(floor(sampleRate * startTime))
 	print("generating %s" % fnOut)
