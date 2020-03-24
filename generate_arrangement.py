@@ -1,34 +1,42 @@
 #!/usr/bin/env python
 
+import random
+
+class RandomNonRepeat():
+	def __init__(self, elements):
+		self.elements = elements
+		self.shuffled = []
+		self.pos = 0
+
+	def next(self):
+		if self.pos == 0:
+			self.shuffled = random.sample(self.elements, len(self.elements))
+
+		v = self.shuffled[self.pos]
+		self.pos += 1
+		if self.pos == len(self.elements):
+			self.pos = 0
+
+		return v
+
+
 import sys
 import os
 
-panOptions = [0.875,0.625,0.375,0.125,-0.125,-0.375,-0.625,-0.875]
+panOptions = RandomNonRepeat([0.875,0.625,0.375,0.125,-0.125,-0.375,-0.625,-0.875])
 workingDir = sys.argv[1]
-samples = os.listdir(os.path.join(workingDir, "stems"))
+sampleOptions = RandomNonRepeat(os.listdir(os.path.join(workingDir, "stems")))
 secondsPerBeat = 1.0 / (60 * float(sys.argv[2]))
 durationSecs = int(sys.argv[3])
 
 timeElapsed = 0.0
-sampleIdx = 0
-panIdx = 0
-
-arrFile = open(os.path.join(workingDir, "arrangement.txt"), "w+")
 
 while timeElapsed < durationSecs:
 	timeIncr = 1.5
-	arrFile.write("%08.4f,%.3f,%s\n" % (timeElapsed, panOptions[panIdx], samples[sampleIdx]))
+	print("%08.4f,%.3f,%s" % (timeElapsed, panOptions.next(), sampleOptions.next()))
 	timeElapsed += timeIncr
-	
-	panIdx += 1
-	if panIdx == len(panOptions):
-		panIdx = 0
 
-	sampleIdx += 1
-	if sampleIdx == len(samples):
-		sampleIdx = 0
 
-arrFile.close()
 
 
 
