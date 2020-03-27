@@ -11,6 +11,7 @@ startOffset = float(sys.argv[4])
 ffmpeg = sys.argv[5]
 sideLength = int(sys.argv[6])
 startW = int(sys.argv[7])
+subDir = "avi\\stems"
 
 
 uniqueSamples = []
@@ -29,13 +30,13 @@ with open(os.path.join(workingDir, "video_arrangement.txt"), "w+") as arrFile:
 			pan = row[1]
 			repetitions = int(stem[3].split(".")[0])
 			
-			arrFile.write("%s,%s,%s,%s,%d\n" % (os.path.join(workingDir, "avi", src), start, stem[2], pan, repetitions))
+			arrFile.write("%s,%s,%s,%s,%d\n" % (os.path.join(workingDir, subDir, src), start, stem[2], pan, repetitions))
 
 
 for i in range(len(uniqueSamples)):
 	s = uniqueSamples[i]
 	src = "stem_%d.avi" % i
-	outFn = (os.path.join(workingDir, "avi", src))
+	outFn = (os.path.join(workingDir, subDir, src))
 	print("%s -i %s -ss %f -t %s -an -b:v 40M -c:v mpeg4 -vtag XVID -vf \"scale=-1:%d, crop=%d:%d:%d:0\" -y %s" % (ffmpeg, videoFile, startOffset + float(s[0]), s[1], sideLength, sideLength, sideLength, startW, outFn))
 
 
