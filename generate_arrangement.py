@@ -26,13 +26,13 @@ import os
 panOptions = RandomNonRepeat([0.875,0.625,0.375,0.125,-0.125,-0.375,-0.625,-0.875])
 workingDir = sys.argv[1]
 sampleOptions = RandomNonRepeat(os.listdir(os.path.join(workingDir, "stems")))
-secondsPerBeat = 1.0 / (60 * float(sys.argv[2]))
+secondsPerBeat = 60.0 / float(sys.argv[2])
 durationSecs = int(sys.argv[3])
 
 timeElapsed = 0.0
 
 while timeElapsed < durationSecs:
-	timeIncr = 1.5
+	timeIncr = secondsPerBeat * random.randint(1, 7)
 	print("%08.4f,%.3f,%s" % (timeElapsed, panOptions.next(), sampleOptions.next()))
 	timeElapsed += timeIncr
 
